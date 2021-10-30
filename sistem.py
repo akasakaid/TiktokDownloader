@@ -7,7 +7,6 @@ import random
 import module
 from requests import *
 from datetime import datetime
-from PyTiktok.download import download
 
 open_config = json.loads(open("config.json").read())
 api = f"https://api.telegram.org/bot{open_config['token_bot']}/"
