@@ -16,14 +16,6 @@ last_use = 1
 def SendVideo(userid,msgid):
 	res = post(f"{api}sendvideo",data={"chat_id":userid,"caption":"<b>Video Downloaded from</b> @TiktokVideoDownloaderIDBot!\n\n<b>EN</b> : <i>if video blank send url again!</i>\n<b>ID</b> : <i>jika video putih kirim url lagi</i>","parse_mode":"html","reply_to_message_id":msgid,"reply_markup":json.dumps({"inline_keyboard":[[{"text":"Support Me ^-^","url":"https://www.youtube.com/channel/UCTjTQErgDA79Owo6tnYN0PQ?sub_confirmation=1"}]]})},files={"video":open("video.mp4","rb")})
 
-def check_joined(userid):
-	pangkat = ["member","creator","administrator"]
-	req = post(f"{api}getchatmember",json={"chat_id":"@watashinosekai_channel","user_id":userid}).json()
-	if req["result"]["status"] in pangkat:
-		return True 
-	else:
-		return False
-
 def SendMsg(userid,text,msgid):
 	post(f"{api}sendmessage",json={"chat_id":userid,"text":text,"parse_mode":"html","reply_to_message_id":msgid})
 
