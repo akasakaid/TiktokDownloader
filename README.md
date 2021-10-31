@@ -6,7 +6,7 @@ Source code of https://t.me/TiktokVideoDownloaderIDBot
  2. Download or clone repository
  3. Open folder repository
  4. edit config.json, paste your token
- 5. Install module on requirements.txt
+ 5. Install module on requirements.txt<br>
 `python3 -m pip install -r requirements.txt`
- 6. Run file bot_polling.py
+ 6. Run file bot_polling.py<br>
 `python3 bot_polling.py`
