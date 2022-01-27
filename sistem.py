@@ -37,7 +37,7 @@ def Bot(update):
     print(f"{get_time(timee)}-> {userid} - {first_name} -> {pesan}")
     if pesan.startswith('/start'):
       SendMsg(userid,"<b>Welcome to Tiktok Video Downlaoder Bot !</b>\n\n<b>How to use this bot </b>:\n<i>just send or paste url video tiktok on this bot </i>!!\n",msgid)
-    elif "tiktok.com" in pesan:
+    elif "tiktok.com" in pesan and "https://" in pesan :
       aplikasi = tiktok_module.Tiktok()
       getvid = aplikasi.musicallydown(url=pesan)
       if getvid == False:
