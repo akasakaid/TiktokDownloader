@@ -4,7 +4,7 @@ import re
 import time
 import requests
 import random
-import module
+import tiktok_module
 from requests import *
 from datetime import datetime
 
@@ -38,7 +38,7 @@ def Bot(update):
     if pesan.startswith('/start'):
       SendMsg(userid,"<b>Welcome to Tiktok Video Downlaoder Bot !</b>\n\n<b>How to use this bot </b>:\n<i>just send or paste url video tiktok on this bot </i>!!\n",msgid)
     elif "tiktok.com" in pesan:
-      aplikasi = module.Tiktok()
+      aplikasi = tiktok_module.Tiktok()
       getvid = aplikasi.musicallydown(url=pesan)
       if getvid == False:
         SendMsg(userid,"<i>Failed to download video</i>\n\n<i>Try again later</i>",msgid)
