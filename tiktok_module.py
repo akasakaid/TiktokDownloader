@@ -9,23 +9,6 @@ class Tiktok:
     def __init__(self):
         self.headers = {"user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36 Edg/90.0.818.66"}
     
-    def savetiktok(self,url):
-        try:
-            print("~> SAVETIKTOK <~")
-            r = requests.Session()
-            req = r.get("https://savetiktok.cc/en/download?url=" + url ,headers=self.headers)
-            if "Extract the TikTok video link failed" in req.text:
-                print("~> video private / removed <~")
-                print("~> failed download <~")
-                return "private/removed"
-            videoid = re.search('video_id=(.*?)&',req.text).group(1)
-            url = f'https://api16-normal-c-useast1a.tiktokv.com/aweme/v1/play/?video_id={videoid}&line=0&is_play_url=1&source=PackSourceEnum_AWEME_DETAIL'
-            self.save(url=url)
-            return True
-        except AttributeError:
-            print("~> failed download <~")
-            return False
-    
     def musicallydown(self,url):
         try:
             print("~> MUSICALLYDOWN <~")
