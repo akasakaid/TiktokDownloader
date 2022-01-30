@@ -9,16 +9,37 @@ from requests import *
 from datetime import datetime
 from config import *
 
-
 api = f"https://api.telegram.org/bot{token_bot}/"
 update_id = 0
 last_use = 1
 
 def SendVideo(userid,msgid):
-	res = post(f"{api}sendvideo",data={"chat_id":userid,"caption":"<b>Video Downloaded from</b> @TiktokVideoDownloaderIDBot!\n\n<b>EN</b> : <i>if video blank send url again!</i>\n<b>ID</b> : <i>jika video putih kirim url lagi</i>","parse_mode":"html","reply_to_message_id":msgid,"reply_markup":json.dumps({"inline_keyboard":[[{"text":"Support Me ^-^","url":"https://www.youtube.com/channel/UCTjTQErgDA79Owo6tnYN0PQ?sub_confirmation=1"}]]})},files={"video":open("video.mp4","rb")})
+	res = post(f"{api}sendvideo",
+    data={"chat_id":userid,
+      "caption":"<b>Video Downloaded from</b> @TiktokVideoDownloaderIDBot!\n\n<b>EN</b> : <i>if video blank send url again!</i>\n<b>ID</b> : <i>jika video putih kirim url lagi</i>",
+      "parse_mode":"html",
+      "reply_to_message_id":msgid,
+      "reply_markup":json.dumps(
+        {"inline_keyboard":[
+          [
+            {"text":"Support Me ^-^",
+            "url":"https://www.youtube.com/channel/UCTjTQErgDA79Owo6tnYN0PQ?sub_confirmation=1"
+            }
+          ]
+          ]
+        }
+      )},
+    files={"video":open("video.mp4","rb")})
 
 def SendMsg(userid,text,msgid):
-	post(f"{api}sendmessage",json={"chat_id":userid,"text":text,"parse_mode":"html","reply_to_message_id":msgid})
+	post(f"{api}sendmessage",
+    json={
+      "chat_id":userid,
+      "text":text,
+      "parse_mode":"html",
+      "reply_to_message_id":msgid
+    }
+  )
 
 def get_time(tt):
 	ttime = datetime.fromtimestamp(tt)
