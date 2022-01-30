@@ -7,9 +7,10 @@ import random
 import tiktok_module
 from requests import *
 from datetime import datetime
+from config import *
 
-open_config = json.loads(open("config.json").read())
-api = f"https://api.telegram.org/bot{open_config['token_bot']}/"
+
+api = f"https://api.telegram.org/bot{token_bot}/"
 update_id = 0
 last_use = 1
 
@@ -38,13 +39,14 @@ def Bot(update):
     if pesan.startswith('/start'):
       SendMsg(userid,"<b>Welcome to Tiktok Video Downlaoder Bot !</b>\n\n<b>How to use this bot </b>:\n<i>just send or paste url video tiktok on this bot </i>!!\n",msgid)
     elif "tiktok.com" in pesan and "https://" in pesan :
-      aplikasi = tiktok_module.Tiktok()
-      getvid = aplikasi.musicallydown(url=pesan)
+      getvid = tiktok_module.Tiktok().musicallydown(url=pesan)
       if getvid == False:
         SendMsg(userid,"<i>Failed to download video</i>\n\n<i>Try again later</i>",msgid)
         return
       elif getvid == "private/removed":
         SendMsg(userid,"<i>Failed to download video</i>\n\n<i>Video was private or removed</i>",msgid)
+      elif getvid == "file size is to large":
+        SendMsg(userid,"<i>Failed to download video</i>\n\n<i>Video size to large</i>",msgid)
       else:
         SendVideo(userid,msgid)
     elif "/help" in pesan:

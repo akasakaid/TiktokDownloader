@@ -2,16 +2,16 @@ import json
 import requests
 from requests import get,post
 from sistem import Bot
+from config import *
 
-open_config = json.loads(open("config.json").read())
-api = f"https://api.telegram.org/bot{open_config['token_bot']}/"
+api = f"https://api.telegram.org/bot{token_bot}/"
 update_id = 0
 
 print("BOT ACTIVED")
 print("PRESS CTRL + C TO EXIT ")
 while True:
 	try:
-		req = get(f"https://api.telegram.org/bot{open_config['token_bot']}/getupdates",params={"offset":update_id}).json()
+		req = get(f"https://api.telegram.org/bot{token_bot}/getupdates",params={"offset":update_id}).json()
 		if len(req['result']) == 0:
 			continue
 		try:

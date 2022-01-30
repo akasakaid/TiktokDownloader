@@ -28,7 +28,7 @@ class Tiktok:
                 '<a style="margin-top:10px;" target="_blank" rel="noreferrer" href="(.*?)"',req.text
             )
             if len(res) == 0:return False
-            self.save(res[0])
+            return self.save(res[0])
             
         except AttributeError:
             print("~> download failure <~")
@@ -36,5 +36,9 @@ class Tiktok:
 
     def save(self,url):
         content = requests.get(url).content
+        if len(content)/1000000 >= 50 * 1024:
+            print("~> file to large !")
+            return "file size is to large"
         open("video.mp4","wb").write(content)
         print("~> download successed <~")
+        return True
