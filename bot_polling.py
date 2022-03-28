@@ -15,9 +15,10 @@ while True:
 		if len(req['result']) == 0:
 			continue
 		try:
-			update = req["result"][0]
-			Bot(update)
-			update_id = update['update_id'] + 1
+			update = req["result"]
+			for update in update:
+				Bot(update)
+				update_id = update['update_id'] + 1
 			print("-"*40)
 		except KeyError:
 			continue
