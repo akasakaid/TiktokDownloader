@@ -13,8 +13,8 @@ class tiktok_downloader:
 	def __init__(self):
 		pass
 
-	# error from server
 	def tik_tok_video(self,url):
+		"this function can't be use !"
 		ses = requests.Session()
 		headers = {
 			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0',
@@ -31,6 +31,9 @@ class tiktok_downloader:
 		print(req.text)
 
 	def musicaldown(self,url,output_name):
+		"""url: tiktok video url
+		output_name: output video (.mp4). Example : video.mp4
+		"""
 		ses = requests.Session()
 		server_url = 'https://musicaldown.com/'
 		headers = {
@@ -69,6 +72,3 @@ class tiktok_downloader:
 			download_link = str(download_link).replace("b'","").replace("'","")
 		get_content = requests.get(download_link).content
 		open(output_name,'wb').write(get_content)
-
-
-tiktok_downloader().musicaldown('https://vt.tiktok.com/ZSdgchxTr/?k=1','dontol.mp4')
