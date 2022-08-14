@@ -1,6 +1,16 @@
 # Tiktok Downloader
-![tiktoklogo](https://raw.githubusercontent.com/akasakaid/TiktokDownloader/main/tklogo.jpg)
-Source code of https://t.me/TiktokVideoDownloaderIDBot
+
+this is a repository for telegram bot tiktok downloader without watermark [TiktokVideoDownloaderIDBot](https://t.me/TiktokVideoDownloaderIDBot)
+
+but you can also use the module I have created 
+```
+# python
+>> from tiktok_module import downloader
+>>
+>> dl = downloader.tiktok_downloader()
+>> result = dl.musicaldown(url="https://tiktok.com/...",output_name="video.mp4")
+>>
+```
 
 ## How to run in local machine :
  1. Create you own bot on [BotFather](https://t.me/BotFather)
