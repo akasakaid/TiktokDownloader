@@ -61,14 +61,28 @@ class tiktok_downloader:
 				data[i.get("name")] = i.get("value")
 		post_url = server_url + "id/download"
 		req_post = ses.post(post_url,data=data)
+		open('hasil.html','wb').write(req_post.content)
+		if req_post.status_code == 302 or 'This video is currently not available' in req_post.text:
+			print('- video private or remove')
+			return 'private/remove'
 		get_all_blank = bs4.BeautifulSoup(req_post.text,'html.parser').findAll('a',attrs={'target':'_blank'})
-		random_number = random.randint(0,len(get_all_blank)-1)
+		download_link = get_all_blank[len(get_all_blank)-1].get('href')
+		get_content = requests.get(download_link).content
+		open(output_name,'wb').write(get_content)
+"""		random_number = random.randint(0,len(get_all_blank)-1)
 		download_link = get_all_blank[random_number].get('href')
 		if '==' in download_link:
 			download_link = re.search(r'url\=(.*?)\&type',download_link).group(1)
 			download_link = b64decode(download_link)
-			#download_link = download_link.decode('utf-8')
-			# alternative use this function because cant decod with utf-8
-			download_link = str(download_link).replace("b'","").replace("'","")
-		get_content = requests.get(download_link).content
-		open(output_name,'wb').write(get_content)
+			try:
+				download_link = download_link.decode('utf-8')
+			except:
+				# alternative use this function because cant decod with utf-8
+				download_link = str(download_link).replace('b"','').replace('"','')
+			print(download_link)
+			get_content = requests.get(download_link).content
+			open(output_name,'wb').write(get_content)
+		elif '==' not in download_link:
+			get_content = requests.get(download_link).content
+			open(output_name,'wb').write(get_content)
+"""
