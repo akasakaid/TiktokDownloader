@@ -69,20 +69,3 @@ class tiktok_downloader:
 		download_link = get_all_blank[len(get_all_blank)-1].get('href')
 		get_content = requests.get(download_link).content
 		open(output_name,'wb').write(get_content)
-"""		random_number = random.randint(0,len(get_all_blank)-1)
-		download_link = get_all_blank[random_number].get('href')
-		if '==' in download_link:
-			download_link = re.search(r'url\=(.*?)\&type',download_link).group(1)
-			download_link = b64decode(download_link)
-			try:
-				download_link = download_link.decode('utf-8')
-			except:
-				# alternative use this function because cant decod with utf-8
-				download_link = str(download_link).replace('b"','').replace('"','')
-			print(download_link)
-			get_content = requests.get(download_link).content
-			open(output_name,'wb').write(get_content)
-		elif '==' not in download_link:
-			get_content = requests.get(download_link).content
-			open(output_name,'wb').write(get_content)
-"""
