@@ -1,6 +1,6 @@
 # Tiktok Downloader
 
-this is a repository for telegram bot tiktok downloader without watermark [TiktokVideoDownloaderIDBot](https://t.me/TiktokVideoDownloaderIDBot)
+This is a repository for telegram bot tiktok downloader without watermark [TiktokVideoDownloaderIDBot](https://t.me/TiktokVideoDownloaderIDBot)
 
 but you can also use the module I have created 
 ```

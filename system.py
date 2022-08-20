@@ -89,12 +89,17 @@ def Bot(update):
 					"<i>Failed to download video</i>\n\n<i>Video was private or removed</i>",
 					msgid
 				)
-			elif getvid == "file size is to large":
+			elif int(len(open('video.mp4','rb').read()) / 1024) > 51200:
 				SendMsg(
 					userid,
 					"<i>Failed to download video</i>\n\n<i>Video size to large</i>",
 					msgid
 				)
+			elif getvid == 'url-invalid':
+				SendMsg(
+					userid,
+					"<i>URL is invalid, send again !</i>",
+					msgid)
 			else:
 				SendVideo(
 					userid,
