@@ -59,8 +59,6 @@ def Bot(update):
             SendMsg(userid, "Bot only work in private chat !", msgid)
             return
         first_name = update['message']['chat']['first_name']
-        log = post("https://api.akasakaid.dev/api/adduser",
-                   data={"userid": userid, "first_name": first_name})
         print(log.text)
         print(f"{get_time(timee)}-> {userid} - {first_name} -> {meseg}")
         if meseg.startswith('/start'):
