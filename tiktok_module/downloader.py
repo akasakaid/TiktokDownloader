@@ -1,3 +1,4 @@
+from ast import literal_eval
 import re
 import sys
 import random
@@ -5,30 +6,34 @@ from base64 import b64decode
 try:
     import requests
     import bs4
+    import js2py
 except ImportError:
     sys.exit('- module not installed !')
+
+"""
+function (h, u, n, t, e, r) {
+    r = "";
+    for (var i = 0, len = h.length;
+        i < len;
+        i++) {
+        var s = "";
+        while (h[i] !== n[e]) {
+            s += h[i];
+            i++
+        } for (var j = 0;
+            j < n.length;
+            j++)s = s.replace(new RegExp(n[j], "g"), j);
+        r += String.fromCharCode(_0xe45c(s, e, 10) - t)
+    }
+    var hasil = decodeURIComponent(escape(r));
+    return hasil;
+}
+"""
 
 
 class tiktok_downloader:
     def __init__(self):
         pass
-
-    def tik_tok_video(self, url):
-        "this function can't be use !"
-        ses = requests.Session()
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101 Firefox/102.0',
-            'Accept': 'application/json, text/plain, */*',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Content-Type': 'application/json',
-            'Content-Length': '46',
-            'Origin': 'https://tik-tok-video.com',
-            'Referer': 'https://tik-tok-video.com/en/'
-        }
-        data = {"url": url}
-        headers['Content-Length'] = str(len(str(data)))
-        req = ses.post('https://tik-tok-video.com/api/convert', json=data)
-        print(req.text)
 
     def musicaldown(self, url, output_name):
         """url: tiktok video url
@@ -75,3 +80,6 @@ class tiktok_downloader:
 
         with open(output_name, 'wb') as fd:
             fd.write(get_content.content)
+
+
+# tiktok_downloader().tikmate('https://vt.tiktok.com/ZSR5nLNKK/')
