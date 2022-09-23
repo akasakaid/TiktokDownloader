@@ -1,12 +1,10 @@
 import json
-import time
-import requests
-import os
 from requests import *
 from datetime import datetime
-from config import *
 from tiktok_module import downloader
+from dotenv import dotenv_values
 
+token_bot = dotenv_values['token_bot']
 api = "https://api.telegram.org/bot" + token_bot
 update_id = 0
 

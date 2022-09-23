@@ -1,10 +1,12 @@
-import json
-import requests
-from requests import get, post
+from time import sleep
+from requests import get
+from requests.exceptions import *
 from system import Bot
-from config import *
+from dotenv import dotenv_values
 
-api = f"https://api.telegram.org/bot" + token_bot + "/"
+token_bot = dotenv_values['token_bot']
+
+api = "https://api.telegram.org/bot" + token_bot + "/"
 update_id = 0
 
 print("BOT ACTIVED")
@@ -17,7 +19,6 @@ while True:
             continue
         try:
             update = req["result"][0]
-#			for update in update:
             Bot(update)
             update_id = update['update_id'] + 1
             print("-"*40)
@@ -25,5 +26,7 @@ while True:
             continue
     except KeyboardInterrupt:
         exit()
-    except requests.exceptions.ConnectionError:
+    except ConnectionError:
+        print('- connection error!,try again after 5 seconds !')
+        sleep(5)
         continue

@@ -94,6 +94,3 @@ class tiktok_downloader:
         with open(output_name, 'wb') as fd:
             fd.write(get_content.content)
         return True
-
-
-tiktok_downloader().musicaldown('https://vt.tiktok.com/ZSR5nLNKK/', 'video.mp4')
