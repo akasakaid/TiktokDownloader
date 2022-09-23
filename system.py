@@ -59,7 +59,6 @@ def Bot(update):
             SendMsg(userid, "Bot only work in private chat !", msgid)
             return
         first_name = update['message']['chat']['first_name']
-        print(log.text)
         print(f"{get_time(timee)}-> {userid} - {first_name} -> {meseg}")
         if meseg.startswith('/start'):
             SendMsg(userid, "<b>Welcome to Tiktok Video Downlaoder Bot !</b>\n\n<b>How to use this bot </b>:\n<i>just send or paste url video tiktok on this bot </i>!!\n", msgid)
