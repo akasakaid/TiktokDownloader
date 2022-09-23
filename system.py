@@ -40,15 +40,8 @@ def SendVideo(userid, msgid):
 
 def SendMsg(userid, text, msgid):
     tg_url = api + "/sendmessage"
-    post(
-        tg_url,
-        json={
-            "chat_id": userid,
-            "text": text,
-            "parse_mode": "html",
-            "reply_to_message_id": msgid
-        }
-    )
+    post(tg_url, json={"chat_id": userid, "text": text,
+         "parse_mode": "html", "reply_to_message_id": msgid})
 
 
 def get_time(tt):
@@ -65,63 +58,49 @@ def Bot(update):
         timee = update['message']['date']
         dl = downloader.tiktok_downloader()
         if update['message']['chat']['type'] != "private":
-            SendMsg(
-                userid,
-                "Bot only work in private chat !",
-                msgid
-            )
+            SendMsg(userid, "Bot only work in private chat !", msgid)
             return
         first_name = update['message']['chat']['first_name']
         print(f"{get_time(timee)}-> {userid} - {first_name} -> {meseg}")
         if meseg.startswith('/start'):
-            SendMsg(
-                userid,
-                "<b>Welcome to Tiktok Video Downlaoder Bot !</b>\n\n<b>How to use this bot </b>:\n<i>just send or paste url video tiktok on this bot </i>!!\n",
-                msgid
-            )
+            SendMsg(userid, "<b>Welcome to Tiktok Video Downlaoder Bot !</b>\n\n<b>How to use this bot </b>:\n<i>just send or paste url video tiktok on this bot </i>!!\n", msgid)
         elif "tiktok.com" in meseg and "https://" in meseg:
             getvid = dl.musicaldown(url=meseg, output_name="video.mp4")
-            if getvid == False:
-                SendMsg(
-                    userid,
-                    "<i>Failed to download video</i>\n\n<i>Try again later</i>",
-                    msgid
-                )
+            if getvid:
+                SendVideo(userid, msgid)
                 return
-            elif getvid == "private/remove":
-                SendMsg(
-                    userid,
-                    "<i>Failed to download video</i>\n\n<i>Video was private or removed</i>",
-                    msgid
-                )
-            elif int(len(open('video.mp4', 'rb').read()) / 1024) > 51200:
-                SendMsg(
-                    userid,
-                    "<i>Failed to download video</i>\n\n<i>Video size to large</i>",
-                    msgid
-                )
-            elif getvid == 'url-invalid':
-                SendMsg(
-                    userid,
-                    "<i>URL is invalid, send again !</i>",
-                    msgid)
+            if getvid == False:
+                getvid = dl.ttscraper(url=meseg, output_name="video.mp4")
+                if getvid:
+                    SendVideo(userid, msgid)
+                    return
+                else:
+                    text = "failed to download video.check link and try again"
+                    SendMsg(userid, text, msgid)
+                    return
+                # SendMsg(
+                #     userid, "<i>Failed to download video</i>\n\n<i>Try again later</i>", msgid)
+                # return
+                # elif getvid == "private/remove":
+                #     SendMsg(
+                #         userid, "<i>Failed to download video</i>\n\n<i>Video was private or removed</i>", msgid)
+                # elif int(len(open('video.mp4', 'rb').read()) / 1024) > 51200:
+                #     SendMsg(
+                #         userid, "<i>Failed to download video</i>\n\n<i>Video size to large</i>", msgid)
+                # elif getvid == 'url-invalid':
+                #     SendMsg(userid, "<i>URL is invalid, send again !</i>", msgid)
+                # else:
             else:
-                SendVideo(
-                    userid,
-                    msgid
-                )
-                os.remove('video.mp4')
+                text = "failed to download video.check link and try again"
+                SendMsg(userid, text, msgid)
+                return
+            # os.remove('video.mp4')
         elif "/help" in meseg:
-            SendMsg(
-                userid,
-                "How to use this bot :\njust send or paste url tiktok video on this bot !\n\n/donation - for donation bot\n/status - show status bot",
-                msgid
-            )
+            SendMsg(userid, "How to use this bot :\njust send or paste url tiktok video on this bot !\n\n/donation - for donation bot\n/status - show status bot", msgid)
         elif meseg.startswith("/donation"):
-            SendMsg(
-                userid,
-                "Support me on\n\nko-fi (EN): https://ko-fi.com/fowawaztruffle\nsaweria (ID): https://saweria.co/fowawaztruffle\ntrakteerid (ID): https://trakteer.id/fowawaz\nQRIS (EWALLET,BANK): https://s.id/nusantara-qr",
-                msgid
-            )
+            # SendMsg(userid, "Support me on\n\nko-fi (EN): https://ko-fi.com/fowawaztruffle\nsaweria (ID): https://saweria.co/fowawaztruffle\ntrakteerid (ID): https://trakteer.id/fowawaz\nQRIS (EWALLET,BANK): https://s.id/nusantara-qr", msgid)
+            text = "EN : support this bot by subscribing to the developer channel and watching the video hehehehe. Thanks\n\nID : dukung bot ini dengan cara berlangganaan di channel developer dan menonton videonya hehehehe. Terima kasih"
+            SendMsg(userid, text, msgid)
+            return
     except KeyError:
         return
