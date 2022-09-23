@@ -6,7 +6,6 @@ from base64 import b64decode
 try:
     import requests
     import bs4
-    import js2py
 except ImportError:
     sys.exit('- module not installed !')
 
