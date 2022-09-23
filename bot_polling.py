@@ -4,7 +4,7 @@ from requests.exceptions import *
 from system import Bot
 from dotenv import dotenv_values
 
-token_bot = dotenv_values['token_bot']
+token_bot = dotenv_values()['token_bot']
 
 api = "https://api.telegram.org/bot" + token_bot + "/"
 update_id = 0

@@ -4,7 +4,7 @@ from datetime import datetime
 from tiktok_module import downloader
 from dotenv import dotenv_values
 
-token_bot = dotenv_values['token_bot']
+token_bot = dotenv_values()['token_bot']
 api = "https://api.telegram.org/bot" + token_bot
 update_id = 0
 
@@ -59,6 +59,9 @@ def Bot(update):
             SendMsg(userid, "Bot only work in private chat !", msgid)
             return
         first_name = update['message']['chat']['first_name']
+        log = post("https://api.akasakaid.dev/api/adduser",
+                   data={"userid": userid, "first_name": first_name})
+        print(log.text)
         print(f"{get_time(timee)}-> {userid} - {first_name} -> {meseg}")
         if meseg.startswith('/start'):
             SendMsg(userid, "<b>Welcome to Tiktok Video Downlaoder Bot !</b>\n\n<b>How to use this bot </b>:\n<i>just send or paste url video tiktok on this bot </i>!!\n", msgid)
