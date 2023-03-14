@@ -34,19 +34,6 @@ class tiktok_downloader:
     def __init__(self):
         pass
 
-    def ttscraper(self, url, output_name):
-        ses = requests.Session()
-        req = ses.post('https://ytpp3.com/ttscraper/parse', data={"url": url})
-        if '"message":"success"' in req.text:
-            load = req.json()
-            url_download = load['data']['nwm_video_url']
-            get_content = requests.get(url_download)
-            with open(output_name, 'wb') as fd:
-                fd.write(get_content.content)
-            return True
-        else:
-            return False
-
     def musicaldown(self, url, output_name):
         """url: tiktok video url
         output_name: output video (.mp4). Example : video.mp4
