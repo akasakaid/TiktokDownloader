@@ -23,13 +23,10 @@ Telegram bot project to help download tiktok videos without watermarks
 
     7. put the bot token from botFather into the .env file
 
-    8. take your facebook account cookie and enter it into the .env file
-    according to the variables that have been determined.
-
-    9.  install the required libraries with the command
+    8.  install the required libraries with the command
     "python3 -m pip install -r requiremenst.txt"
 
-    10. then run the program with the command "python3 main.py"
+    9.  then run the program with the command "python3 main.py"
 
 ## Note
  - let me know if I'm wrong or there's a mistake
