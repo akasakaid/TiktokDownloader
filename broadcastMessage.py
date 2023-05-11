@@ -35,3 +35,4 @@ for user in listUser:
     print('~' * 50)
     userId = user["user_id"]
     sendMessage(chat_id=userId,message=textMessage)
+    print('- success send message to userid :',userId)
