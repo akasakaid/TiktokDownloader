@@ -34,5 +34,5 @@ listUser = requests.get("https://api.akasakaid.dev/api/getusertiktok").json()
 for user in listUser:
     print('~' * 50)
     userId = user["user_id"]
-    sendMessage(chat_id=userId,message=textMessage)
+    sendMessage(chat_id=userId,message=textMessage,message_id=None)
     print('- success send message to userid :',userId)

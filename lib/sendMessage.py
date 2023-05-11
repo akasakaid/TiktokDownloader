@@ -16,8 +16,10 @@ def sendMessage(chat_id: int, message: str, message_id: int):
         app = TelegramClient(session=f"session/bot",
                              api_id=apiid, api_hash=apihash)
         app.start(bot_token=tokenbot)
-        app.send_message(entity=chat_id, message=message,
-                         reply_to=message_id, parse_mode="markdown", link_preview=False)
+        if message_id is None:
+            app.send_message(entity=chat_id, message=message, parse_mode="markdown", link_preview=False)
+            return
+        app.send_message(entity=chat_id, message=message,reply_to=message_id, parse_mode="markdown", link_preview=False)
         app.disconnect()
     except Exception as e:
         app.disconnect()
