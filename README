@@ -1,35 +1,34 @@
-# Tiktok Downloader
+#Tiktok Downloader
 --------------------
+This is a Telegram bot Project to help download tiktok videos without watermark
 
-Hi,
+##How to run in local machine
 
-Telegram bot project to help download tiktok videos without watermarks
+You must have a python program language installation, if not please install it first based on the operating system you are using. <a href="https://www.python.org/downloads/" target="_blank">**Here**</a>
 
-## How to run in local machine
+Clone or download this repository
 
-    1. You must have a python program language installation,
-    if not please install it first based on the operating system you are using.
+```
+git clone https://github.com/akasakaid/TiktokDownloader.git
+```
+create **api_id** and **api_hash** on the telegram website <a href="https://my.telegram.org/auth" target="_blank">**Here**</a>
 
-    2. clone or download this repository
+rename the **.env.example** file to **.env**
 
-    3. create api_id and api_hash on the telegram website: https://my.telegram.org
+Input **api_id** and **api_hash** into the **.env file**
+according to the variables that have been specifie
 
-    4. rename the .env.example file to .env
+create telegram bot in botFather **https://t.me/BotFather**
 
-    5. input api_id and api_hash into the .env file
-    according to the variables that have been specified
+Put the bot token from botFather into the **.env** file
 
-    6. create telegram bot in botFather https://t.me/BotFather
+Install the required libraries with the command
+```
+python3 -m pip install -r requiremenst.txt
+```
+Then run the program with the command 
+```	
+ python3 main.py
+```
 
-    7. put the bot token from botFather into the .env file
 
-    8.  install the required libraries with the command
-    "python3 -m pip install -r requiremenst.txt"
-
-    9.  then run the program with the command "python3 main.py"
-
-## Note
- - let me know if I'm wrong or there's a mistake
-   tq
-
--- AkasakaID
