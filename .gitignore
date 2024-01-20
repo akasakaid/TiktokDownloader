@@ -6,3 +6,7 @@ session/*
 *.html
 .log
 __pycache__/*
+env
+tes.py
+*.session
+*.session-journal
