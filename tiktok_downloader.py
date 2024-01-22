@@ -118,32 +118,23 @@ class downloader:
 	def tikmatecc(self,url:str):
 		try:
 			headers = {
-				"Host": "tikmate.cc",
-				"accept": "application/json, text/javascript, */*; q=0.01",
-				"user-agent": "Mozilla/5.0 (Linux; Android 11; CPH2061 Build/RKQ1.200903.002) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Mobile Safari/537.36",
-				"origin": "https://ttmate.io",
-				"x-requested-with": "mark.via.gp",
-				"sec-fetch-site": "cross-site",
-				"sec-fetch-mode": "cors",
-				"sec-fetch-dest": "empty",
-				"referer":"https://ttmate.io/",
-				"accept-language": "en-US,en;q=0.9,id-ID;q=0.8,id;q=0.7,tr-TR;q=0.6,tr;q=0.5"
-			}
-			api = "https://tikmate.cc/analyze"
-			params = {
-				"url": url,
-				"site": "tiktok"
-			}
-			res = requests.get(api,params=params,headers=headers)
+				"Host": "europe-west3-instadown-314417.cloudfunctions.net",
+				"User-Agent": "socialdownloader.p.rapidapi.com",
+				"Accept": "*/*",
+				"Accept-Language": "ar",
+				"Accept-Encoding": "gzip, deflate"
+				}
+			api = "https://europe-west3-instadown-314417.cloudfunctions.net/yt-dlp-1?url=" + url
+			res = requests.get(api,headers=headers)
 			if res.text[0] != "{":
 				return False
 	
-			error = res.json()["error"]
+			error = res.json()["null"] or res.json()["error"] or res.json()["Error"]
 			if error:
 				return False
 	
-			videoUrl = res.json()["formats"]["video"][0]["url"]
-			res = get_content(videoUrl, self.output_name)
+			videoUrl = res.json()["LINKS"]
+			res = get_content(videoUrl)
 			return res
 	
 		except AttributeError:
