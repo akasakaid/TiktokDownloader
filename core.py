@@ -76,35 +76,35 @@ Donation :
 			res = dl.tiktapio(text)
 			if res:
 				print("[+] success download with tiktapio !")
-				delete_message(message_id)
+				delete_message(user_id,message_id)
 				send_video(user_id,video_name,msg)
 				return
 			
 			res = dl.tiktapiocom(text)
 			if res:
 				print("[+] success download with tiktapiocom !")
-				delete_message(message_id)
+				delete_message(user_id,message_id)
 				send_video(user_id,video_name,msg)
 				return
 			
 			res = dl.tikmatecc(text)
 			if res:
 				print("[+] success download with tikmatecc !")
-				delete_message(message_id)
+				delete_message(user_id,message_id)
 				send_video(user_id,video_name,msg)
 				return
 			
 			res = dl.snaptikpro(text)
 			if res:
 				print("[+] success download with snaptikpro !")
-				delete_message(message_id)
+				delete_message(user_id,message_id)
 				send_video(user_id,video_name,msg)
 				return
 			
 			res = dl.musicaldown(text)
 			if res:
 				print("[+] success download with musicaldown !")
-				delete_message(message_id)
+				delete_message(user_id,message_id)
 				send_video(user_id,video_name,msg)
 				return
 			
