@@ -19,14 +19,14 @@ async def start_handler(client: pyrogram.Client, message: pyrogram.types.Message
     username = message.chat.username
     last_name = message.chat.last_name
     userid = message.chat.id
-    query = "SELECT * FROM users WHERE userid = :userid"
+    query = "SELECT * FROM users WHERE user_id = :userid"
     values = {"userid": userid}
     async with databases.Database(DATABASE) as database:
         result = await database.fetch_one(query=query, values=values)
         if result is None:
             query = users.insert()
             values = {
-                "userid": userid,
+                "user_id": userid,
                 "first_name": first_name,
                 "last_name": last_name,
                 "username": username,
