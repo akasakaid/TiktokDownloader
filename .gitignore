@@ -10,3 +10,6 @@ env
 tes.py
 *.session
 *.session-journal
+venv
+*.js
+*.json
