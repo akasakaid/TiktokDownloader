@@ -80,24 +80,29 @@ async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Messag
             chat_id=userid, text=retext, reply_to_message_id=msgid
         )
         return
-    rekey = pyrogram.types.InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                pyrogram.types.InlineKeyboardButton(text="Source Video", url=text),
-            ],
-            [
-                pyrogram.types.InlineKeyboardButton(
-                    text="Follow Me", url="https://t.me/fawwazthoerif"
-                ),
-                pyrogram.types.InlineKeyboardButton(
-                    text="Donation", callback_data="donation"
-                ),
-            ],
-        ]
-    )
-    retext = """Successfully download the video 
+    link_length = len(text)
+    source_link = f"[Video Source]({text})"
+    retext = f"""Successfully download the video 
+
+{(source_link if len(link_length) > 40 else '')}
 
 Powered by @TiktokVideoDownloaderIDBot"""
+    keylist = [
+        [
+            pyrogram.types.InlineKeyboardButton(text="Source Video", url=text),
+        ],
+        [
+            pyrogram.types.InlineKeyboardButton(
+                text="Follow Me", url="https://t.me/fawwazthoerif"
+            ),
+            pyrogram.types.InlineKeyboardButton(
+                text="Donation", callback_data="donation"
+            ),
+        ],
+    ]
+    if len(link_length) > 40:
+        keylist.pop(0)
+    rekey = pyrogram.types.InlineKeyboardMarkup(inline_keyboard=keylist)
     async with databases.Database(DATABASE) as database:
         query = "SELECT * FROM videos WHERE video_id = :video_id"
         values = {"video_id": valid}
