@@ -84,7 +84,7 @@ async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Messag
     source_link = f"[Video Source]({text})"
     retext = f"""Successfully download the video 
 
-{(source_link if len(link_length) > 40 else '')}
+{(source_link if link_length > 40 else '')}
 
 Powered by @TiktokVideoDownloaderIDBot"""
     keylist = [
@@ -100,7 +100,7 @@ Powered by @TiktokVideoDownloaderIDBot"""
             ),
         ],
     ]
-    if len(link_length) > 40:
+    if link_length > 40:
         keylist.pop(0)
     rekey = pyrogram.types.InlineKeyboardMarkup(inline_keyboard=keylist)
     async with databases.Database(DATABASE) as database:
