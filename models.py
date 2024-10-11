@@ -9,7 +9,7 @@ users = sqlalchemy.Table(
         name="id", type_=sqlalchemy.BigInteger, primary_key=True, autoincrement=True
     ),
     sqlalchemy.Column(
-        name="userid",
+        name="user_id",
         type_=sqlalchemy.BigInteger,
         unique=True,
     ),
