@@ -51,8 +51,28 @@ EN : How to use the bot by simply sending the link of the tiktok video you want 
 
 async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Message):
     userid = message.chat.id
+    first_name = message.chat.first_name
+    last_name = message.chat.last_name
+    username = message.chat.username
     text = message.text
     msgid = message.id
+    query = "SELECT * FROM users WHERE user_id = :userid"
+    values = {"userid": userid}
+    async with databases.Database(DATABASE) as database:
+        result = await database.fetch_one(query=query, values=values)
+        if result is None:
+            query = users.insert()
+            values = {
+                "user_id": userid,
+                "first_name": first_name,
+                "last_name": last_name,
+                "username": username,
+                "created_at": datetime.now(tz=timezone.utc)
+                .now()
+                .isoformat()
+                .split(".")[0],
+            }
+            await database.execute(query=query, values=values)
     valid = await utils.get_video_detail(text)
     if valid is None:
         retext = "The tiktok video you want to download doesn't exist, it might be deleted or a private video."
