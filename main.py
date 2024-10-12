@@ -19,6 +19,8 @@ async def start_handler(client: pyrogram.Client, message: pyrogram.types.Message
     username = message.chat.username
     last_name = message.chat.last_name
     userid = message.chat.id
+    text = message.text
+    print(f"{userid} {first_name} - {text}")
     query = "SELECT * FROM users WHERE user_id = :userid"
     values = {"userid": userid}
     async with databases.Database(DATABASE) as database:
@@ -56,6 +58,7 @@ async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Messag
     username = message.chat.username
     text = message.text
     msgid = message.id
+    print(f"{userid} {first_name} - {text}")
     query = "SELECT * FROM users WHERE user_id = :userid"
     values = {"userid": userid}
     async with databases.Database(DATABASE) as database:
@@ -132,7 +135,6 @@ Powered by @TiktokVideoDownloaderIDBot"""
             "file_unique_id": file_unique_id,
             "created_at": datetime.now(tz=timezone.utc).now().isoformat().split(".")[0],
         }
-        print(values)
         await database.execute(query=query, values=values)
     output.unlink(missing_ok=True)
     return
@@ -144,8 +146,13 @@ async def donation_handler(
 ):
     if isinstance(message, pyrogram.types.Message):
         userid = message.chat.id
+        first_name = message.chat.first_name
+        text = message.text
     if isinstance(message, pyrogram.types.CallbackQuery):
         userid = message.from_user.id
+        first_name = message.from_user.first_name
+        text = message.data
+    print(f"{userid} {first_name} - {text}")
     retext = """If you like my work, you can support me through the link below.
     
 International : https://sociabuzz.com/fawwazthoerif/tribe
