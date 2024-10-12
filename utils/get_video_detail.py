@@ -21,4 +21,7 @@ async def get_video_detail(url: str):
     infoload = json.loads(infotag.text)
     video_detail = infoload.get("__DEFAULT_SCOPE__", {}).get("webapp.video-detail", {})
     video_id = video_detail.get("itemInfo", {}).get("itemStruct", {}).get("id")
-    return video_id
+    author = video_detail.get("itemInfo", {}).get("itemStruct", {}).get("author", {})
+    author_id = author.get("id")
+    author_username = author.get("uniqueId")
+    return video_id, author_id, author_username

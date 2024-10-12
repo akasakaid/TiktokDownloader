@@ -76,8 +76,8 @@ async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Messag
                 .split(".")[0],
             }
             await database.execute(query=query, values=values)
-    valid = await utils.get_video_detail(text)
-    if valid is None:
+    video_id, author_id, author_username = await utils.get_video_detail(text)
+    if video_id is None:
         retext = "The tiktok video you want to download doesn't exist, it might be deleted or a private video."
         await client.send_message(
             chat_id=userid, text=retext, reply_to_message_id=msgid
@@ -107,8 +107,12 @@ Powered by @TiktokVideoDownloaderIDBot"""
         keylist.pop(0)
     rekey = pyrogram.types.InlineKeyboardMarkup(inline_keyboard=keylist)
     async with databases.Database(DATABASE) as database:
-        query = "SELECT * FROM videos WHERE video_id = :video_id"
-        values = {"video_id": valid}
+        query = "SELECT * FROM videos WHERE video_id = :video_id AND author_id = :author_id OR author_username = :author_username"
+        values = {
+            "video_id": video_id,
+            "author_id": author_id,
+            "author_username": author_username,
+        }
         result = await database.fetch_one(query=query, values=values)
         if result is not None:
             file_id = result.file_id
@@ -130,7 +134,7 @@ Powered by @TiktokVideoDownloaderIDBot"""
     async with databases.Database(DATABASE) as database:
         query = videos.insert()
         values = {
-            "video_id": valid,
+            "video_id": video_id,
             "file_id": file_id,
             "file_unique_id": file_unique_id,
             "created_at": datetime.now(tz=timezone.utc).now().isoformat().split(".")[0],

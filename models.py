@@ -32,6 +32,12 @@ videos = sqlalchemy.Table(
     sqlalchemy.Column(
         name="id", type_=sqlalchemy.BigInteger, primary_key=True, autoincrement=True
     ),
+    sqlalchemy.Column(
+        name="author_id", type_=sqlalchemy.VARCHAR(length=255), index=True
+    ),
+    sqlalchemy.Column(
+        name="author_username", type_=sqlalchemy.VARCHAR(length=255), index=True
+    ),
     sqlalchemy.Column(name="video_id", type_=sqlalchemy.BigInteger, unique=True),
     sqlalchemy.Column(name="file_id", type_=sqlalchemy.String(length=255), index=True),
     sqlalchemy.Column(

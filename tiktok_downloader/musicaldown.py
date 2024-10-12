@@ -28,7 +28,6 @@ async def musicaldown(url: str, output: str):
         res = await ses.post(
             "https://musicaldown.com/download", data=data, follow_redirects=True
         )
-        open("hasil.html", "w", encoding="utf-8").write(res.text)
         if res.text.find("Convert Video Now") >= 0:
             data = re.search(r"data: '(.*?)'", res.text).group(1)
             urlSlider = re.search(r"url: '(.*?)'", res.text).group(1)
@@ -44,7 +43,6 @@ async def musicaldown(url: str, output: str):
         urls = parsing.findAll(
             "a", attrs={"class": "btn waves-effect waves-light orange download"}
         )
-        print(urls)
         if len(urls) <= 0:
             return False
 

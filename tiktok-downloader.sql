@@ -31,6 +31,8 @@ CREATE TABLE `users` (
 DROP TABLE IF EXISTS `videos`;
 CREATE TABLE `videos` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `author_id` varchar(255) DEFAULT NULL,
+  `author_username` varchar(255) DEFAULT NULL,
   `video_id` bigint(20) NOT NULL,
   `file_id` varchar(255) NOT NULL,
   `file_unique_id` varchar(255) NOT NULL,
@@ -39,8 +41,10 @@ CREATE TABLE `videos` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `video_id` (`video_id`),
   KEY `file_id` (`file_id`),
-  KEY `file_unique_id` (`file_unique_id`)
+  KEY `file_unique_id` (`file_unique_id`),
+  KEY `author_id` (`author_id`),
+  KEY `author_username` (`author_username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
--- 2024-10-11 07:34:35
+-- 2024-10-12 23:06:54
