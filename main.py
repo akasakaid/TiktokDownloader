@@ -134,6 +134,8 @@ Powered by @TiktokVideoDownloaderIDBot"""
     async with databases.Database(DATABASE) as database:
         query = videos.insert()
         values = {
+            "author_id": author_id,
+            "author_username": author_username,
             "video_id": video_id,
             "file_id": file_id,
             "file_unique_id": file_unique_id,
