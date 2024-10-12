@@ -115,8 +115,8 @@ Powered by @TiktokVideoDownloaderIDBot"""
                 chat_id=userid, file_id=file_id, caption=retext, reply_markup=rekey
             )
             return
-
-    output = cwd.joinpath("video.mp4")
+    now = int(datetime.now(tz=timezone.utc).timestamp())
+    output = cwd.joinpath(f"{now}.mp4")
     result = await tiktok_downloader.musicaldown(url=text, output=output)
     await client.delete_messages(chat_id=userid, message_ids=msgid)
     result = await client.send_video(
@@ -134,6 +134,7 @@ Powered by @TiktokVideoDownloaderIDBot"""
         }
         print(values)
         await database.execute(query=query, values=values)
+    output.unlink(missing_ok=True)
     return
 
 
