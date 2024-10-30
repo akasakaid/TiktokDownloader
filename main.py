@@ -82,6 +82,7 @@ async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Messag
     print(
         f"video id : {video_id}, author id : {author_id}, username : {author_username}"
     )
+    print(f"video url : {video_url}")
     if video_id is None:
         retext = "The tiktok video you want to download doesn't exist, it might be deleted or a private video."
         await client.send_message(
@@ -131,10 +132,10 @@ Powered by @TiktokVideoDownloaderIDBot"""
             return
     now = int(datetime.now(tz=timezone.utc).timestamp())
     output = cwd.joinpath(f"{now}.mp4")
-    if video_url is None:
+    if len(video_url) <= 0:
         print("try download with musicaldown !")
         result = await tiktok_downloader.musicaldown(url=text, output=output)
-    if video_url is not None:
+    else:
         print("try download with main tiktok")
         result = await tiktok_downloader.get_content(
             url=video_url, output=output, cookies=cookies
