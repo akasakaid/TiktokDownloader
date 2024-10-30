@@ -53,7 +53,7 @@ EN : How to use the bot by simply sending the link of the tiktok video you want 
 
 async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Message):
     userid = message.chat.id
-    first_name = message.chat.first_name
+    first_name = message.chat.first_name or ""
     last_name = message.chat.last_name
     username = message.chat.username
     text = message.text
@@ -76,7 +76,12 @@ async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Messag
                 .split(".")[0],
             }
             await database.execute(query=query, values=values)
-    video_id, author_id, author_username = await utils.get_video_detail(text)
+    video_id, author_id, author_username, video_url, images, cookies = (
+        await utils.get_video_detail(text)
+    )
+    print(
+        f"video id : {video_id}, author id : {author_id}, username : {author_username}"
+    )
     if video_id is None:
         retext = "The tiktok video you want to download doesn't exist, it might be deleted or a private video."
         await client.send_message(
@@ -107,14 +112,16 @@ Powered by @TiktokVideoDownloaderIDBot"""
         keylist.pop(0)
     rekey = pyrogram.types.InlineKeyboardMarkup(inline_keyboard=keylist)
     async with databases.Database(DATABASE) as database:
-        query = "SELECT * FROM videos WHERE video_id = :video_id AND author_id = :author_id OR author_username = :author_username"
+        query = (
+            "SELECT * FROM videos WHERE video_id = :video_id AND author_id = :author_id"
+        )
         values = {
             "video_id": video_id,
             "author_id": author_id,
-            "author_username": author_username,
         }
         result = await database.fetch_one(query=query, values=values)
         if result is not None:
+            print("using cache database !")
             file_id = result.file_id
             file_unique_id = result.file_unique_id
             await client.delete_messages(chat_id=userid, message_ids=msgid)
@@ -124,7 +131,14 @@ Powered by @TiktokVideoDownloaderIDBot"""
             return
     now = int(datetime.now(tz=timezone.utc).timestamp())
     output = cwd.joinpath(f"{now}.mp4")
-    result = await tiktok_downloader.musicaldown(url=text, output=output)
+    if video_url is None:
+        print("try download with musicaldown !")
+        result = await tiktok_downloader.musicaldown(url=text, output=output)
+    if video_url is not None:
+        print("try download with main tiktok")
+        result = await tiktok_downloader.get_content(
+            url=video_url, output=output, cookies=cookies
+        )
     await client.delete_messages(chat_id=userid, message_ids=msgid)
     result = await client.send_video(
         chat_id=userid, video=output, caption=retext, reply_markup=rekey

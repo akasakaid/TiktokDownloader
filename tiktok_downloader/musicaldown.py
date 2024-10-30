@@ -31,11 +31,11 @@ async def musicaldown(url: str, output: str):
         if res.text.find("Convert Video Now") >= 0:
             data = re.search(r"data: '(.*?)'", res.text).group(1)
             urlSlider = re.search(r"url: '(.*?)'", res.text).group(1)
-            res = ses.post(urlSlider, data={"data": data})
+            res = await ses.post(urlSlider, data={"data": data})
             if res.text.find('"success":true') >= 0:
                 urlVideo = res.json()["url"]
                 res = await get_content(urlVideo, output)
-                return res
+                return True
 
             return False
 
@@ -49,7 +49,7 @@ async def musicaldown(url: str, output: str):
         i = random.randint(0, 1)
         urlVideo = urls[i].get("href")
         res = await get_content(urlVideo, output)
-        return res
+        return True
 
     except Exception as e:
         print(f"musicaldown error : {e}")
