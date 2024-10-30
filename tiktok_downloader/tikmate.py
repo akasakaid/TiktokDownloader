@@ -1,7 +1,8 @@
 import re
 import httpx
 from fake_useragent import UserAgent
-from utils import tikmate_decode
+
+# from utils import tikmate_decode
 
 
 async def tikmate(url: str, output):
