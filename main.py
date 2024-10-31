@@ -132,7 +132,7 @@ Powered by @TiktokVideoDownloaderIDBot"""
             return
     now = int(datetime.now(tz=timezone.utc).timestamp())
     output = cwd.joinpath(f"{now}.mp4")
-    if len(video_url) <= 0:
+    if video_url is None or len(video_url) <= 0:
         print("try download with musicaldown !")
         result = await tiktok_downloader.musicaldown(url=text, output=output)
     else:
