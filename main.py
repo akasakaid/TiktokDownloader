@@ -91,11 +91,10 @@ async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Messag
         return
     link_length = len(text)
     source_link = f"[Video Source]({text})"
-    retext = f"""Successfully download the video 
-
-{(source_link if link_length > 40 else '')}
-
-Powered by @TiktokVideoDownloaderIDBot"""
+    retext = f"Successfully download the video\n"
+    if link_length > 40:
+        retext += f"\n{source_link}\n"
+    retext += "\nPowered by @TiktokVideoDownloaderIDBot"
     keylist = [
         [
             pyrogram.types.InlineKeyboardButton(text="Source Video", url=text),
@@ -144,8 +143,14 @@ Powered by @TiktokVideoDownloaderIDBot"""
     result = await client.send_video(
         chat_id=userid, video=output, caption=retext, reply_markup=rekey
     )
-    file_id = result.video.file_id
-    file_unique_id = result.video.file_unique_id
+    video = result.video
+    animation = result.animation
+    if video is not None:
+        file_id = result.video.file_id
+        file_unique_id = result.video.file_unique_id
+    if animation is not None:
+        file_id = result.animation.file_id
+        file_unique_id = result.animation.file_unique_id
     async with databases.Database(DATABASE) as database:
         query = videos.insert()
         values = {
