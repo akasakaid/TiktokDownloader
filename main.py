@@ -51,6 +51,19 @@ EN : How to use the bot by simply sending the link of the tiktok video you want 
     return
 
 
+async def ping_handler(client: pyrogram.Client, message: pyrogram.types.Message):
+    userid = message.chat.id
+    first_name = message.chat.first_name or ""
+    msg_id = message.id
+    print(f"{userid} {first_name} - /ping")
+    result = await client.send_message(
+        chat_id=userid, text="Pong!", reply_to_message_id=msg_id
+    )
+    await asyncio.sleep(2)
+    await client.delete_messages(chat_id=userid, message_ids=msg_id)
+    await client.delete_messages(chat_id=userid, message_ids=result.id)
+
+
 async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Message):
     userid = message.chat.id
     first_name = message.chat.first_name or ""
@@ -205,6 +218,12 @@ async def main():
         handler=pyrogram.handlers.message_handler.MessageHandler(
             callback=start_handler,
             filters=pyrogram.filters.command(commands=["start"]),
+        )
+    )
+    bot.add_handler(
+        handler=pyrogram.handlers.message_handler.MessageHandler(
+            callback=ping_handler,
+            filters=pyrogram.filters.regex(r"ping"),
         )
     )
     bot.add_handler(
