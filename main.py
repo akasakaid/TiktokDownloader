@@ -89,8 +89,19 @@ async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Messag
                 .split(".")[0],
             }
             await database.execute(query=query, values=values)
+    tiktok_url = None
+    if len(text.split("\n")) > 1:
+        tiktok_url = text.split("\n")[0]
+        if "tiktok" not in tiktok_url:
+            retext = "The video link you sent may be wrong."
+            await client.send_message(
+                chat_id=userid, text=retext, reply_to_message_id=msgid
+            )
+            return
+    else:
+        tiktok_url = text
     video_id, author_id, author_username, video_url, images, cookies = (
-        await utils.get_video_detail(text)
+        await utils.get_video_detail(tiktok_url)
     )
     print(
         f"video id : {video_id}, author id : {author_id}, username : {author_username}"
@@ -102,15 +113,15 @@ async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Messag
             chat_id=userid, text=retext, reply_to_message_id=msgid
         )
         return
-    link_length = len(text)
-    source_link = f"[Video Source]({text})"
+    link_length = len(tiktok_url)
+    source_link = f"[Video Source]({tiktok_url})"
     retext = f"Successfully download the video\n"
     if link_length > 40:
         retext += f"\n{source_link}\n"
     retext += "\nPowered by @TiktokVideoDownloaderIDBot"
     keylist = [
         [
-            pyrogram.types.InlineKeyboardButton(text="Source Video", url=text),
+            pyrogram.types.InlineKeyboardButton(text="Source Video", url=tiktok_url),
         ],
         [
             pyrogram.types.InlineKeyboardButton(
@@ -146,7 +157,7 @@ async def tiktok_handler(client: pyrogram.Client, message: pyrogram.types.Messag
     output = cwd.joinpath(f"{video_id}.mp4")
     if video_url is None or len(video_url) <= 0:
         print("try download with musicaldown !")
-        result = await tiktok_downloader.musicaldown(url=text, output=output)
+        result = await tiktok_downloader.musicaldown(url=tiktok_url, output=output)
     else:
         print("try download with main tiktok")
         result = await tiktok_downloader.get_content(
